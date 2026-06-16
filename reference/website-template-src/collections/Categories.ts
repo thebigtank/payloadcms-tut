@@ -21,11 +21,6 @@ export const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'description',
-      type: 'text',
-      // Plain text by design (per spec) — not richText.
-    },
     slugField({
       position: undefined,
     }),

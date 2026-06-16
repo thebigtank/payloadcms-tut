@@ -1,30 +1,22 @@
 import type { TextFieldSingleValidation } from 'payload'
 import {
-  BlockquoteFeature,
   BoldFeature,
-  HeadingFeature,
   ItalicFeature,
   LinkFeature,
-  OrderedListFeature,
   ParagraphFeature,
   lexicalEditor,
   UnderlineFeature,
-  UnorderedListFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
 
 export const defaultLexical = lexicalEditor({
   features: [
     ParagraphFeature(),
-    HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
-    UnorderedListFeature(),
-    OrderedListFeature(),
-    BlockquoteFeature(),
     UnderlineFeature(),
     BoldFeature(),
     ItalicFeature(),
     LinkFeature({
-      enabledCollections: ['pages', 'products'],
+      enabledCollections: ['pages', 'posts'],
       fields: ({ defaultFields }) => {
         const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
           if ('name' in field && field.name === 'url') return false

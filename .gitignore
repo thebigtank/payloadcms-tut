@@ -16,7 +16,7 @@ public/sitemap*.xml
 
 # Local verification artifacts (browser MCP output, manual screenshots)
 .playwright-mcp/
-phase0-dashboard.png
+phase*.png
 
 # Playwright
 node_modules/
