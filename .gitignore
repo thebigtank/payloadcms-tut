@@ -17,6 +17,7 @@ public/sitemap*.xml
 # Local verification artifacts (browser MCP output, manual screenshots)
 .playwright-mcp/
 phase*.png
+*.tsbuildinfo
 
 # Playwright
 node_modules/

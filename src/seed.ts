@@ -81,6 +81,14 @@ const richText = (children: LexNode[]) => ({
   },
 })
 
+// slugField marks `slug` as required in the generated types (even though the
+// field hook auto-generates it), so we pass explicit slugs to satisfy strict TS.
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+
 // Generate a solid-color PNG buffer (offline placeholder image).
 const makeImage = (r: number, g: number, b: number) =>
   sharp({ create: { width: 800, height: 800, channels: 3, background: { r, g, b } } })
@@ -143,7 +151,10 @@ const run = async () => {
   ]
   const categoryIds: Record<string, number> = {}
   for (const data of categoryData) {
-    const cat = await payload.create({ collection: 'categories', data })
+    const cat = await payload.create({
+      collection: 'categories',
+      data: { ...data, slug: slugify(data.title) },
+    })
     categoryIds[data.title] = cat.id as number
   }
 
@@ -165,6 +176,7 @@ const run = async () => {
       collection: 'products',
       data: {
         title: p.title,
+        slug: slugify(p.title),
         authorOrBrand: p.authorOrBrand,
         price: p.price,
         category: categoryIds[p.category],
@@ -185,6 +197,7 @@ const run = async () => {
     collection: 'pages',
     data: {
       title: 'Home',
+      slug: 'home',
       heroImage: mediaIds[0],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       body: richText([
@@ -198,6 +211,7 @@ const run = async () => {
     collection: 'pages',
     data: {
       title: 'About',
+      slug: 'about',
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       body: richText([
         heading('h2', 'About us'),
